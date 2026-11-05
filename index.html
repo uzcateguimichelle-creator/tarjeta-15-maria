@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>¡Felices 15 Años, María! ✨👑</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --rose-gold: #e28e9b;
+      --deep-rose: #b74a62;
+      --gold-primary: #d4af37;
+      --gold-light: #fbeea4;
+      --bg-dark: #1a0826;
+      --card-bg: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      background: radial-gradient(circle at 50% 20%, #3a1645 0%, #200a29 55%, #100416 100%);
+      font-family: 'Montserrat', sans-serif;
+      color: #ffffff;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    #fxCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Luces ambientales suaves */
+    .ambient-glow {
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 1;
+      animation: pulseGlow 7s infinite alternate ease-in-out;
+    }
+    .orb-1 {
+      top: 5%;
+      left: -15%;
+      background: radial-gradient(circle, #e28e9b, #b74a62);
+    }
+    .orb-2 {
+      bottom: 5%;
+      right: -15%;
+      background: radial-gradient(circle, #d4af37, #9333ea);
+      animation-delay: -3.5s;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translateY(0); opacity: 0.3; }
+      100% { transform: scale(1.2) translateY(30px); opacity: 0.5; }
+    }
+
+    /* Contenedor Interactivo Principal */
+    .app-viewport {
+      width: 92%;
+      max-width: 440px;
+      margin: 20px auto;
+      perspective: 1000px;
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Sobre interactivo de apertura */
+    .envelope-box {
+      width: 100%;
+      background: linear-gradient(145deg, rgba(255, 230, 240, 0.16), rgba(255, 255, 255, 0.05));
+      border: 1px solid rgba(244, 212, 222, 0.35);
+      border-radius: 28px;
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(226, 142, 155, 0.25);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .envelope-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 45px rgba(212, 175, 55, 0.4);
+    }
+    .envelope-icon {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: heartbeat 2s infinite ease-in-out;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); filter: drop-shadow(0 0 15px rgba(251, 238, 164, 0.8)); }
+    }
+
+    /* Tarjeta Revelada */
+    .card-container {
+      display: none;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1.5px solid rgba(251, 238, 164, 0.4);
+      border-radius: 32px;
+      padding: 30px 22px 24px;
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.7), 0 0 35px rgba(226, 142, 155, 0.3);
+      text-align: center;
+      position: relative;
+      animation: cardAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cardAppear {
+      0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Tiara / Corona */
+    .crown-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(226, 142, 155, 0.35));
+      border: 1px solid rgba(251, 238, 164, 0.6);
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #fef3c7;
+      margin-bottom: 10px;
+    }
+
+    .title-intro {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: #ffd6e0;
+      letter-spacing: 1px;
+      font-style: italic;
+    }
+
+    .name-heading {
+      font-family: 'Alex Brush', cursive;
+      font-size: 4.2rem;
+      line-height: 1;
+      font-weight: 400;
+      background: linear-gradient(135deg, #ffffff 10%, #ffd1dc 40%, #fbeea4 75%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 8px 0;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+    }
+
+    .subtitle-15 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: #fce7f3;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    /* Pastel con el Número 15 Dorado */
+    .cake-wrapper {
+      position: relative;
+      width: 170px;
+      height: 145px;
+      margin: 6px auto 16px;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+    .cake-wrapper:active {
+      transform: scale(0.96);
+    }
+
+    .candle-flame {
+      transform-origin: center bottom;
+      animation: flicker 1.2s infinite alternate ease-in-out;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-3deg); opacity: 0.95; }
+      50% { transform: scale(1.2, 0.88) rotate(3deg); opacity: 1; }
+      100% { transform: scale(0.9, 1.15) rotate(-2deg); opacity: 0.9; }
+    }
+
+    .flame-smoke {
+      display: none;
+      opacity: 0;
+      animation: smokeRise 1.6s forwards ease-out;
+    }
+
+    @keyframes smokeRise {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-24px) scale(2); }
+    }
+
+    /* Caja del Mensaje y Dedicatoria */
+    .dedication-card {
+      background: rgba(18, 5, 26, 0.55);
+      border-radius: 20px;
+      border: 1px solid rgba(251, 238, 164, 0.3);
+      padding: 18px 16px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .main-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff1f2;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .quote-highlight {
+      background: linear-gradient(120deg, #fef08a, #fda4af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .family-signature {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #fbeea4;
+      letter-spacing: 0.5px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+      padding-top: 10px;
+      margin-top: 6px;
+    }
+
+    .family-names {
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(226, 142, 155, 0.6);
+    }
+
+    /* Botones de Acción */
+    .action-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #b74a62 0%, #d4af37 100%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 15px 22px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      border-radius: 18px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(183, 74, 98, 0.5), 0 0 20px rgba(212, 175, 55, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(183, 74, 98, 0.7), 0 0 28px rgba(212, 175, 55, 0.6);
+    }
+    .action-btn:active {
+      transform: scale(0.97);
+    }
+
+    .footer-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fce7f3;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      color: #fff;
+    }
+
+    /* Brillo flotante */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      animation: floatSparkle 3.5s infinite ease-in-out;
+    }
+    .s-1 { top: 8%; right: 8%; width: 20px; animation-delay: 0.3s; }
+    .s-2 { bottom: 12%; left: 8%; width: 18px; animation-delay: 1.4s; }
+
+    @keyframes floatSparkle {
+      0%, 100% { transform: translateY(0) scale(0.9); opacity: 0.4; }
+      50% { transform: translateY(-8px) scale(1.2); opacity: 1; filter: drop-shadow(0 0 8px #fbeea4); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(70px);
+      background: rgba(25, 8, 35, 0.95);
+      color: #fdf2f8;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lienzo interactivo para confeti continuo y ráfagas de oro/rosa -->
+  <canvas id="fxCanvas"></canvas>
+
+  <!-- Luces ambientales de fondo -->
+  <div class="ambient-glow orb-1"></div>
+  <div class="ambient-glow orb-2"></div>
+
+  <main class="app-viewport">
+    
+    <!-- Pantalla Inicial: Sobre de Sorpresa -->
+    <div class="envelope-box" id="envelopeTrigger">
+      <div class="envelope-icon">💌</div>
+      <div class="crown-badge">UNA SORPRESA PARA TI</div>
+      <h2 style="font-family:'Playfair Display',serif; font-size: 1.7rem; color: #fff; margin: 10px 0;">María</h2>
+      <p style="font-size: 0.92rem; color: #fce7f3; opacity: 0.9; margin-bottom: 18px;">
+        Toca aquí para abrir tu tarjeta especial de 15 años ✨
+      </p>
+      <button class="action-btn" style="pointer-events: none;">
+        <span>Abrir Carta</span>
+        <span>✨</span>
+      </button>
+    </div>
+
+    <!-- Pantalla Principal: Tarjeta Revelada -->
+    <section class="card-container" id="birthdayCard">
+      <!-- Destellos decorativos SVG -->
+      <svg class="sparkle s-1" viewBox="0 0 24 24" fill="none">
+        <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" fill="#fbeea4"/>
+      </svg>
+      <svg class="sparkle s-2" viewBox="0 0 24 24" fill="none">
+        <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" fill="#e28e9b"/>
+      </svg>
+
+      <div class="crown-badge">
+        <span>👑</span> MIS QUINCE AÑOS <span>👑</span>
+      </div>
+
+      <p class="title-intro">Celebrando a nuestra hermosa quinceañera</p>
+      <h1 class="name-heading">María</h1>
+      <p class="subtitle-15">✨ Dulces Quince Años ✨</p>
+
+      <!-- Pastel de Gala con Número 15 Dorado y Velas -->
+      <div class="cake-wrapper" id="cakeBtn" title="Toca para soplar las velas de tus 15">
+        <svg viewBox="0 0 180 150" width="100%" height="100%">
+          <defs>
+            <linearGradient id="goldNum" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff6cc" />
+              <stop offset="40%" stop-color="#f59e0b" />
+              <stop offset="70%" stop-color="#d97706" />
+              <stop offset="100%" stop-color="#fef08a" />
+            </linearGradient>
+            <linearGradient id="cakeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f472b6" />
+              <stop offset="50%" stop-color="#fbcfe8" />
+              <stop offset="100%" stop-color="#ec4899" />
+            </linearGradient>
+          </defs>
+
+          <!-- Base del plato -->
+          <ellipse cx="90" cy="140" rx="76" ry="9" fill="rgba(255,255,255,0.2)" />
+          <ellipse cx="90" cy="138" rx="72" ry="7" fill="#ffffff" opacity="0.65" />
+
+          <!-- Capa Inferior del Pastel -->
+          <rect x="30" y="96" width="120" height="42" rx="7" fill="url(#cakeGrad)" />
+          <rect x="30" y="125" width="120" height="13" rx="4" fill="#be185d" opacity="0.45" />
+          <path d="M30 96 Q45 108 60 96 Q75 108 90 96 Q105 108 120 96 Q135 108 150 96" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+
+          <!-- Capa Superior del Pastel -->
+          <rect x="48" y="65" width="84" height="34" rx="6" fill="#fdf2f8" />
+          <path d="M48 65 Q58 75 68 65 Q78 75 88 65 Q98 75 108 65 Q118 75 128 65" fill="none" stroke="#f472b6" stroke-width="4" stroke-linecap="round" />
+          
+          <!-- Perlas de decoración -->
+          <circle cx="58" cy="65" r="3" fill="#d4af37" />
+          <circle cx="90" cy="65" r="3" fill="#d4af37" />
+          <circle cx="122" cy="65" r="3" fill="#d4af37" />
+
+          <!-- Número 15 Dorado en el Topper -->
+          <text x="89" y="52" font-family="'Playfair Display', serif" font-size="34" font-weight="bold" fill="url(#goldNum)" text-anchor="middle" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))">15</text>
+
+          <!-- Flamas de las velas del 15 -->
+          <!-- Flama Izquierda (sobre el '1') -->
+          <g id="flame1" class="candle-flame">
+            <path d="M78 18 C74 24 75 29 78 29 C81 29 82 24 78 18 Z" fill="#fbbf24" />
+            <path d="M78 21 C76 24 77 27 78 27 C79 27 80 24 78 21 Z" fill="#f97316" />
+          </g>
+          <circle id="smoke1" class="flame-smoke" cx="78" cy="22" r="4" fill="#e5e7eb" />
+
+          <!-- Flama Derecha (sobre el '5') -->
+          <g id="flame2" class="candle-flame">
+            <path d="M99 18 C95 24 96 29 99 29 C102 29 103 24 99 18 Z" fill="#fbbf24" />
+            <path d="M99 21 C97 24 98 27 99 27 C100 27 101 24 99 21 Z" fill="#f97316" />
+          </g>
+          <circle id="smoke2" class="flame-smoke" cx="99" cy="22" r="4" fill="#e5e7eb" />
+        </svg>
+      </div>
+
+      <!-- Tarjeta con la Dedicatoria Especial de los Tíos -->
+      <article class="dedication-card">
+        <p class="main-quote">
+          <span class="quote-highlight">«¡Que tus quince sean inolvidables!»</span>
+        </p>
+        <p style="font-size: 0.95rem; line-height: 1.6; color: #fae8ff; margin-bottom: 12px; font-weight: 300;">
+          Que esta nueva y mágica etapa llene tu vida de sueños cumplidos, bendiciones y sonrisas tan brillantes como tú.
+        </p>
+        <span class="family-signature">
+          De parte de tus tíos <span class="family-names">Corina y Michelle ✨</span>
+        </span>
+      </article>
+
+      <!-- Botón de Soplar Velas / Celebrar -->
+      <button class="action-btn" id="surpriseBtn">
+        <span id="btnIcon">🎂</span>
+        <span id="btnText">¡Sopla las velitas de tus 15!</span>
+      </button>
+
+      <!-- Botones de Acción y Compartir por WhatsApp -->
+      <div class="footer-actions">
+        <button class="icon-btn" id="audioToggle">
+          <span id="soundIcon">🔔</span> Melodía
+        </button>
+        <button class="icon-btn" id="shareBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+            <polyline points="16 6 12 2 8 6"/>
+            <line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+          Reenviar por WhatsApp
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">¡Enlace listo para enviar por WhatsApp! 📲</div>
+
+  <script>
+    // --- Canvas de Partículas (Oro, Rosa Quinceañera y Confeti) ---
+    const canvas = document.getElementById('fxCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const QUINCE_COLORS = ['#fbeea4', '#d4af37', '#f472b6', '#fda4af', '#f3e8ff', '#ffffff'];
+
+    class FloatingSparkle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = -20;
+        this.size = Math.random() * 5 + 2.5;
+        this.speedY = Math.random() * 1.3 + 0.6;
+        this.speedX = Math.sin(Math.random() * 8) * 0.7;
+        this.color = QUINCE_COLORS[Math.floor(Math.random() * QUINCE_COLORS.length)];
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 2;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotSpeed;
+        if (this.y > height + 20) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    class BurstParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 13 + 3;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed - 3.5;
+        this.gravity = 0.32;
+        this.drag = 0.95;
+        this.size = Math.random() * 8 + 4;
+        this.color = QUINCE_COLORS[Math.floor(Math.random() * QUINCE_COLORS.length)];
+        this.life = 1;
+        this.decay = Math.random() * 0.02 + 0.013;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 16;
+      }
+      update() {
+        this.vx *= this.drag;
+        this.vy = this.vy * this.drag + this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+        this.life -= this.decay;
+      }
+      draw() {
+        if (this.life <= 0) return;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.7);
+        ctx.restore();
+      }
+    }
+
+    const ambientParticles = Array.from({ length: 30 }, () => new FloatingSparkle());
+    const bursts = [];
+
+    function triggerBurst(x, y, count = 75) {
+      for (let i = 0; i < count; i++) {
+        bursts.push(new BurstParticle(x, y));
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      ambientParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      for (let i = bursts.length - 1; i >= 0; i--) {
+        bursts[i].update();
+        bursts[i].draw();
+        if (bursts[i].life <= 0) bursts.splice(i, 1);
+      }
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // --- Síntesis de Sonido Suave (Web Audio API nativo) ---
+    let audioCtx = null;
+    function playCelebrationTune() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50]; // Notas alegres cristalinas
+        notes.forEach((freq, index) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.12);
+
+          gain.gain.setValueAtTime(0, audioCtx.currentTime + index * 0.12);
+          gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + index * 0.12 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + index * 0.12 + 0.9);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(audioCtx.currentTime + index * 0.12);
+          osc.stop(audioCtx.currentTime + index * 0.12 + 0.95);
+        });
+      } catch (e) {
+        // Fallback silencioso si el navegador bloquea audio
+      }
+    }
+
+    // --- Manejo del DOM e Interacciones ---
+    const envelopeTrigger = document.getElementById('envelopeTrigger');
+    const birthdayCard = document.getElementById('birthdayCard');
+    const cakeBtn = document.getElementById('cakeBtn');
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    const btnText = document.getElementById('btnText');
+    const btnIcon = document.getElementById('btnIcon');
+    const shareBtn = document.getElementById('shareBtn');
+    const audioToggle = document.getElementById('audioToggle');
+    const toast = document.getElementById('toast');
+
+    let candlesBlown = false;
+
+    // Apertura del sobre
+    envelopeTrigger.addEventListener('click', () => {
+      envelopeTrigger.style.display = 'none';
+      birthdayCard.style.display = 'block';
+
+      // Celebración inicial con ráfaga y música
+      triggerBurst(window.innerWidth / 2, window.innerHeight * 0.4, 90);
+      playCelebrationTune();
+    });
+
+    // Soplar velitas del número 15
+    function extinguishCandles() {
+      if (candlesBlown) {
+        // Si ya están apagadas, genera nueva ráfaga festiva
+        triggerBurst(window.innerWidth / 2, window.innerHeight * 0.45, 80);
+        playCelebrationTune();
+        return;
+      }
+
+      const f1 = document.getElementById('flame1');
+      const f2 = document.getElementById('flame2');
+      const s1 = document.getElementById('smoke1');
+      const s2 = document.getElementById('smoke2');
+
+      if (f1) f1.style.display = 'none';
+      if (f2) f2.style.display = 'none';
+      if (s1) s1.style.display = 'block';
+      if (s2) s2.style.display = 'block';
+
+      candlesBlown = true;
+      btnText.textContent = '¡Deseo de tus 15 Concedido! ✨';
+      btnIcon.textContent = '👑';
+
+      const rect = cakeBtn.getBoundingClientRect();
+      triggerBurst(rect.left + rect.width / 2, rect.top + 30, 110);
+      playCelebrationTune();
+    }
+
+    surpriseBtn.addEventListener('click', extinguishCandles);
+    cakeBtn.addEventListener('click', extinguishCandles);
+    audioToggle.addEventListener('click', playCelebrationTune);
+
+    // Clic en la pantalla para chispas doradas adicionales
+    document.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button') || e.target.closest('#cakeBtn') || e.target.closest('#envelopeTrigger')) return;
+      triggerBurst(e.clientX, e.clientY, 20);
+    });
+
+    // Compartir por WhatsApp con dedicatoria predefinida
+    shareBtn.addEventListener('click', () => {
+      const shareUrl = window.location.href;
+      const shareMessage = `🌸👑 ¡Felices 15 Años, María! «Que tus quince sean inolvidables» de parte de tus tíos Corina y Michelle ✨. Mira tu tarjeta aquí: ${shareUrl}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
+
+      window.open(whatsappUrl, '_blank');
+
+      try {
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = shareUrl;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3200);
+      } catch (err) {}
+    });
+  </script>
+</body>
+</html>
